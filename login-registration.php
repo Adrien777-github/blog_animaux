@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion & Inscription</title>
+    <title>Blog | Animaux | Connexion | Inscription</title>
     <link href="/blog/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/blog/fontawesome/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         body {
             background-color: #f8f9fa;
@@ -33,7 +34,7 @@
             </ul>
             <div class="tab-content mt-3" id="authTabContent">
                 <div class="tab-pane fade show active" id="login" role="tabpanel">
-                    <form id="loginForm">
+                    <form action="" id="loginForm">
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-envelope"></i> Email</label>
                             <input type="email" name="email" class="form-control" id="loginEmail" required>
@@ -49,7 +50,7 @@
                     <a href="index.php" class="btn btn-secondary w-100 mt-2">Annuler</a>
                 </div>
                 <div class="tab-pane fade" id="register" role="tabpanel">
-                    <form id="registerForm">
+                    <form action="" id="registerForm">
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-user"></i> Nom</label>
                             <input type="text" name="nom" class="form-control" id="registerName" required>
