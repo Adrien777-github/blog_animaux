@@ -27,7 +27,7 @@
         <a href="#"><i class="fas fa-users"></i> <span>Listes utilisateurs</span></a>
         <a href="/blog/admin/article/article.php"><i class="fas fa-file"></i> <span>Articles</span></a>
         <a href="/blog/admin/categorie/categorie.php"><i class="fas fa-folder"></i> <span>Catégories</span></a>
-        <a href="#"><i class="fas fa-sign-out-alt"></i> <span>Déconnexion</span></a>
+        <a href="/blog/admin/logout.php"><i class="fas fa-sign-out-alt"></i> <span>Déconnexion</span></a>
     </div>
     <div class="content">
         <h2>Contenu principal</h2>

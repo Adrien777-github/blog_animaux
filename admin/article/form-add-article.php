@@ -1,3 +1,9 @@
+<?php
+require('../categorie/controllerCategorie.php');
+
+// Récupération des catégories
+$categories = getCategories($pdo);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -17,20 +23,21 @@
         <a href="../accueil.php"><i class="fas fa-home"></i> <span>Accueil</span></a>
         <a href="#"><i class="fas fa-user"></i> <span>Mon Profil</span></a>
         <a href="#"><i class="fas fa-users"></i> <span>Listes utilisateurs</span></a>
-        <a href="/blog/admin/article/article.php"><i class="fas fa-file"></i> <span>Articles</span></a>
-        <a href="categorie.php"><i class="fas fa-folder"></i> <span>Catégories</span></a>
+        <a href="article.php"><i class="fas fa-file"></i> <span>Articles</span></a>
+        <a href="/blog/admin/categorie/categorie.php"><i class="fas fa-folder"></i> <span>Catégories</span></a>
         <a href="/blog/admin/logout.php"><i class="fas fa-sign-out-alt"></i> <span>Déconnexion</span></a>
     </div>
     <div class="content">
-    <div class="container mt-3">
+
+<div class="container mt-3">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card shadow">
-                    <div class="card-header bg-info text-white">
-                        <h4>Créer une catégorie</h4>
+                    <div class="card-header bg-primary text-white">
+                        <h4>Créer un article</h4>
                     </div>
                     <div class="card-body">
-                    <form id="categorieForm" class="needs-validation" novalidate method="POST" action="addCategorie.php">
+                    <form id="articleForm" class="needs-validation" novalidate method="POST" action="addArticle.php" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="titre" class="form-label">Titre</label>
                             <input type="text" class="form-control" id="titre" name="titre" required>
@@ -39,10 +46,28 @@
 
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                            <div class="invalid-feedback">La description est obligatoire</div>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="categorie" class="form-label">Catégorie</label>
+                            <select class="form-select" id="categorie" name="categorie" required>
+                            <?php foreach ($categories as $categorie) : ?>
+                                <option value="<?= $categorie["id"] ?>"><?= $categorie["nom"] ?></option>
+                            <?php endforeach; ?>
+                            </select>
+                            <div class="invalid-feedback">Veuillez sélectionner une catégorie</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image</label>
+                            <input class="form-control" type="file" id="image" name="image" accept="image/*" required>
+                            <div class="invalid-feedback">Veuillez sélectionner une image</div>
+                        </div>
+
                         <div class="d-grid gap-2">
-                            <button class="btn btn-info" type="submit">Créer la catégorie</button>
+                            <button class="btn btn-success" type="submit">Créer l'article</button>
                         </div>
                     </form>
                     </div>
@@ -50,12 +75,11 @@
             </div>
         </div>
     </div>
-
-    </div>
-    <script src="/blog/assets/js/script.js"></script>
-    <script src="/blog/assets/js/bootstrap.bundle.min.js"></script>
-    <script>
-document.getElementById("categorieForm").addEventListener("submit", function(event) {
+</div>
+<script src="/blog/assets/js/script.js"></script>
+<script src="/blog/assets/js/bootstrap.bundle.min.js"></script>
+<script>
+document.getElementById("articleForm").addEventListener("submit", function(event) {
     event.preventDefault();
     
     let form = this;
@@ -67,12 +91,12 @@ document.getElementById("categorieForm").addEventListener("submit", function(eve
 
     let formData = new FormData(form);
 
-    fetch("addCategorie.php", {
+    fetch("addArticle.php", {
         method: "POST",
         body: formData
     }).then(response => response.json()).then(data => {
         if (data.success) {
-            alert("Catégorie créé avec succès !");
+            alert("Article créé avec succès !");
             form.reset();
             form.classList.remove('was-validated');
         } else {

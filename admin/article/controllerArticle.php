@@ -1,8 +1,15 @@
 <?php
-include_once('../config.php');
+$path = dirname(__DIR__).DIRECTORY_SEPARATOR."config.php";
+include_once($path);
 // Fonction pour récupérer tous les articles
+function getArticle($pdo, $id) {
+    $stmt = $pdo->prepare("SELECT * FROM articles WHERE id = ?");
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC); // Récupère l'article sous forme de tableau associatif
+}
+
 function getArticles($pdo) {
-    $stmt = $pdo->query("SELECT * FROM articles");
+    $stmt = $pdo->prepare("SELECT * FROM articles");
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 

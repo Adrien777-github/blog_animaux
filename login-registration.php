@@ -63,7 +63,7 @@
                     <a href="index.php" class="btn btn-secondary w-100 mt-2">Annuler</a>
                 </div>
                 <div class="tab-pane fade" id="register" role="tabpanel">
-                    <form action="/blog/admin/addUser.php" id="registerForm" method="POST">
+                    <form action="/blog/admin/user/addUser.php" id="registerForm" method="POST">
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-user"></i> Nom</label>
                             <input type="text" name="nom" class="form-control" id="registerName" required>
@@ -115,7 +115,7 @@
             }
 
             if (!isValid) return;
-            $.post('/blog/admin/addUser.php', $(this).serialize(), function(response) {
+            $.post('/blog/admin/user/addUser.php', $(this).serialize(), function(response) {
                 $('#registerForm')[0].reset();
                 $('#message').fadeIn().delay(3000).fadeOut();
                 });

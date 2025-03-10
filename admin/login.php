@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '/blog/admin/user/controllerUser.php';
+require 'user/controllerUser.php';
 // Récupération des étudiants
 $users = getUtilisateurs($pdo);
 

@@ -1,5 +1,6 @@
 <?php
-include_once('../config.php');
+$path = dirname(__DIR__).DIRECTORY_SEPARATOR."config.php";
+include_once($path);
 // Fonction pour récupérer tous les utilisateurs
 function getUtilisateurs($pdo) {
     $stmt = $pdo->query("SELECT * FROM utilisateur");

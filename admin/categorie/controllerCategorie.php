@@ -1,5 +1,13 @@
 <?php
-include_once('../config.php');
+$path = dirname(__DIR__).DIRECTORY_SEPARATOR."config.php";
+include_once($path);
+
+function getCategorie($pdo, $id) {
+    $stmt = $pdo->prepare("SELECT * FROM articles WHERE id = ?");
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC); // Récupère l'article sous forme de tableau associatif
+}
+
 // Fonction pour récupérer tous les categories
 function getCategories($pdo) {
     $stmt = $pdo->query("SELECT * FROM categorie");

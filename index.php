@@ -1,3 +1,9 @@
+<?php
+require('admin/categorie/controllerCategorie.php');
+require('admin/article/controllerArticle.php');
+$categories = getCategories($pdo);
+$articles = getArticles($pdo);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -31,14 +37,10 @@
             Catégorie
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Mammifière</a></li>
-            <li><a class="dropdown-item" href="#">Rongeur</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Oiseau</a></li>
-            <li><a class="dropdown-item" href="#">Poisson</a></li>
-            <li><a class="dropdown-item" href="#">Reptile</a></li>
-            <li><a class="dropdown-item" href="#">Amphibien</a></li>
-            <li><a class="dropdown-item" href="#">Insecte</a></li>
+            <?php foreach ($categories as $categorie) : ?>
+              <li><a class="dropdown-item" href="#"><?= $categorie["nom"] ?></a></li>
+              <?php /*echo $categorie["id"];*/ ?>
+            <?php endforeach; ?>
           </ul>
         </li>
         
@@ -90,32 +92,19 @@
 </div>
 
 <div class="row justify-content-center">
-    <div class="col-md-3 mt-3 card" style="width: 18rem;" >
-        <img src="/blog/images/grenouille.png" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Grenouille</h5>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem, nulla...</p>
-            <a href="#" class="btn btn-primary">En savoir plus</a>
-        </div>
-    </div>
+    <div class="row justify-content-center">
+                <?php foreach ($articles as $article) : ?>
+                <div class="col-md-3 mt-3 card" style="width: 18rem;" >
+                    <img src="<?= $article["image"] ?>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $article["titre"] ?></h5>
+                        <p class="card-text"><?= $article["description"] ?></p>
+                        <a href="#" class="btn btn-primary">En savoir plus</a>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+  </div>
 
-    <div class="col-md-3 mt-3 offset-md-1 card" style="width: 18rem;" >
-        <img src="/blog/images/maki.png" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Maki</h5>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, incidunt...</p>
-            <a href="#" class="btn btn-primary">En savoir plus</a>
-        </div>
-    </div>
-
-    <div class="col-md-3 mt-3 offset-md-1 card" style="width: 18rem;" >
-        <img src="/blog/images/serpent.png" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Serpent</h5>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, corporis...</p>
-            <a href="#" class="btn btn-primary">En savoir plus</a>
-        </div>
-    </div>
 </div>
 <footer class="text-center mt-5">
         <p>&copy; 2025 Site de Blog pour animaux. Tous droits réservés à Adrien.</p>
