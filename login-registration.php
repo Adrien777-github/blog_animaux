@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -19,11 +22,23 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        .alert-success {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="form-container">
+            <?php if(isset($_SESSION['erreur'])): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Erreur !</strong> <?php echo $_SESSION['erreur']; ?> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                </div>
+            <?php endif; ?>
+                <div id="message" class="alert alert-success" role="alert" style="display:none;">
+                    <strong>Login !</strong> Crée avec succès!
+                </div>
             <ul class="nav nav-tabs" id="authTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">Connexion</button>
@@ -34,23 +49,21 @@
             </ul>
             <div class="tab-content mt-3" id="authTabContent">
                 <div class="tab-pane fade show active" id="login" role="tabpanel">
-                    <form action="" id="loginForm">
+                    <form action="/blog/admin/login.php" id="loginForm" method="POST">
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-envelope"></i> Email</label>
                             <input type="email" name="email" class="form-control" id="loginEmail" required>
-                            <div class="invalid-feedback">Veuillez entrer une adresse email valide.</div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-key"></i> Mot de passe</label>
                             <input type="password" name="mdp" class="form-control" id="loginPassword" required>
-                            <div class="invalid-feedback">Veuillez entrer votre mot de passe.</div>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Se connecter</button>
                     </form>
                     <a href="index.php" class="btn btn-secondary w-100 mt-2">Annuler</a>
                 </div>
                 <div class="tab-pane fade" id="register" role="tabpanel">
-                    <form action="" id="registerForm">
+                    <form action="/blog/admin/addUser.php" id="registerForm" method="POST">
                         <div class="mb-3">
                             <label class="form-label"><i class="fas fa-user"></i> Nom</label>
                             <input type="text" name="nom" class="form-control" id="registerName" required>
@@ -78,25 +91,37 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/blog/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/blog/assets/js/jquery.min.js"></script>
     <script>
         document.getElementById('registerForm').addEventListener('submit', function(event) {
             event.preventDefault();
             let password = document.getElementById('registerPassword');
             let confirmPassword = document.getElementById('confirmPassword');
-            
+            let isValid = true;
+
             if (password.value.length < 6) {
                 password.classList.add('is-invalid');
+                isValid = false;
             } else {
                 password.classList.remove('is-invalid');
             }
             
             if (password.value !== confirmPassword.value) {
                 confirmPassword.classList.add('is-invalid');
+                isValid = false;
             } else {
                 confirmPassword.classList.remove('is-invalid');
             }
+
+            if (!isValid) return;
+            $.post('/blog/admin/addUser.php', $(this).serialize(), function(response) {
+                $('#registerForm')[0].reset();
+                $('#message').fadeIn().delay(3000).fadeOut();
+                });
         });
+
+
     </script>
 </body>
 </html>
