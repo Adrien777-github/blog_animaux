@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'controllerUser.php';
+require '/blog/admin/user/controllerUser.php';
 // Récupération des étudiants
 $users = getUtilisateurs($pdo);
 
@@ -13,7 +13,7 @@ foreach ($users as $user){
     }
     else{
         $_SESSION['erreur'] = "Login invalide";
-        header("Location: ../login-registration.php");
+        header("Location: /blog/login-registration.php");
         exit();
     }
 }
