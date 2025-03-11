@@ -3,7 +3,7 @@ $path = dirname(__DIR__).DIRECTORY_SEPARATOR."config.php";
 include_once($path);
 
 function getCategorie($pdo, $id) {
-    $stmt = $pdo->prepare("SELECT * FROM articles WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT * FROM categorie WHERE id = ?");
     $stmt->execute([$id]);
     return $stmt->fetch(PDO::FETCH_ASSOC); // Récupère l'article sous forme de tableau associatif
 }

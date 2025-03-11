@@ -1,10 +1,11 @@
 <?php
-require('admin/categorie/controllerCategorie.php');
-require('admin/article/controllerArticle.php');
-require('admin/user/controllerUser.php');
+require('controllerArticle.php');
+require('../categorie/controllerCategorie.php');
+require('../user/controllerUser.php');
 
+$article = getArticle($pdo, $_GET['id']);
 $categories = getCategories($pdo);
-$articles = getArticles($pdo);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -14,12 +15,7 @@ $articles = getArticles($pdo);
     <title>Blog | Animaux</title>
     <link href="/blog/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/blog/fontawesome/css/all.min.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <style>
-      .card{
-            margin-right: 20px;
-        }
-    </style>
+    <link rel="icon" type="image/png" href="/blog/favicon.png">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -98,23 +94,15 @@ $articles = getArticles($pdo);
   </button>
 </div>
 
-<div class="row justify-content-center">
-    <div class="row justify-content-center">
-                <?php foreach ($articles as $article) : ?>
-                <div class="col-md-3 mt-3 card" style="width: 18rem;" >
-                    <img src="<?= $article["image"] ?>" class="card-img-top" alt="...">
-                    <div class="card-body">
-                    <?php $auteur = getUtilisateur($pdo, $article["auteur"]);?>
-                        <h5 class="card-title"><?= $article["titre"] ?></h5><span class="badge bg-warning"><?= $auteur["nom"] ?></span>
-                        <span class="badge bg-info"><?= substr($article["date_creation"],0,10) ?></span>            
-                        <?php $description  = mb_substr($article["description"], 0, 200, "UTF-8"); ?>
-                        <p class="card-text"><?= $description." ..." ?></p>
-                        <a href="admin/article/detailsArticle.php?id=<?= $article['id'] ?>" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> En savoir plus</a>
-                    </div>
-                </div>
-                <?php endforeach; ?>
+<div class="card mt-3">
+  <img src="<?= $article["image"] ?>" class="card-img-top" alt="...">
+  <div class="card-body">
+  <?php $auteur = getUtilisateur($pdo, $article["auteur"]);?>
+  <span class="badge bg-warning"><?= $auteur["nom"] ?></span>
+    <p class="card-text"><small class="text-muted"><?= $article["date_creation"] ?></small></p>
+    <h5 class="card-title"><?= $article["titre"] ?></h5>
+    <p class="card-"><?= $article["description"] ?></p>
   </div>
-
 </div>
 <footer class="text-center mt-5">
         <p>&copy; 2025 Site de Blog pour animaux. Tous droits réservés à Adrien.</p>

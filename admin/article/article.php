@@ -1,16 +1,23 @@
 <?php
+session_start();
+if(!isset($_SESSION['user'])){
+    header("Location: /blog/login-registration.php");
+    exit();
+}
+
 require('../categorie/controllerCategorie.php');
 require('controllerArticle.php');
 // Récupération des catégories
 $categories = getCategories($pdo);
 $articles = getArticles($pdo);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration</title>
+    <title>Administration | Articles</title>
     <link href="/blog/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/blog/fontawesome/css/all.min.css" rel="stylesheet">
     <link href="/blog/assets/css/style.css" rel="stylesheet">
@@ -31,14 +38,14 @@ $articles = getArticles($pdo);
             <i class="fas fa-bars"></i>
         </button>
         <a href="../accueil.php"><i class="fas fa-home"></i> <span>Accueil</span></a>
-        <a href="#"><i class="fas fa-user"></i> <span>Mon Profil</span></a>
-        <a href="#"><i class="fas fa-users"></i> <span>Listes utilisateurs</span></a>
+        <a href="/blog/admin/profil.php"><i class="fas fa-user"></i> <span>Mon Profil</span></a>
+        <a href="/blog/admin/user/utilisateur.php"><i class="fas fa-users"></i> <span>Listes utilisateurs</span></a>
         <a href="article.php"><i class="fas fa-file"></i> <span>Articles</span></a>
         <a href="/blog/admin/categorie/categorie.php"><i class="fas fa-folder"></i> <span>Catégories</span></a>
         <a href="/blog/admin/logout.php"><i class="fas fa-sign-out-alt"></i> <span>Déconnexion</span></a>
     </div>
 <div class="content">
-        <div class="container">
+        <div class="container mt-3">
             <a href="form-add-article.php" class="btn btn-success btn-add"><i class="fas fa-plus"></i> Ajouter</a>
             <div class="row justify-content-center">
                 <?php foreach ($articles as $article) : ?>
@@ -46,7 +53,8 @@ $articles = getArticles($pdo);
                     <img src="<?= $article["image"] ?>" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title"><?= $article["titre"] ?></h5>
-                        <p class="card-text"><?= $article["description"] ?></p>
+                        <?php $description  = mb_substr($article["description"], 0, 200, "UTF-8"); ?>
+                        <p class="card-text"><?= $description." ..." ?></p>
                         <a href="#" class="btn btn-primary">En savoir plus</a>
                     </div>
                 </div>
@@ -54,7 +62,7 @@ $articles = getArticles($pdo);
             </div>
         </div>
 </div>
-    <script src="/blog/assets/js/script.js"></script>
-    <script src="/blog/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/blog/assets/js/script.js"></script>
+<script src="/blog/assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

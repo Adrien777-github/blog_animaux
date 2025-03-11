@@ -1,7 +1,7 @@
 <?php
     session_start();
     if(!isset($_SESSION['user'])){
-        header("Location: ../login-registration.php");
+        header("Location: /blog/login-registration.php");
         exit();
     }
 
@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar Vertical Bootstrap</title>
+    <title>Administration</title>
     <link href="/blog/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/blog/fontawesome/css/all.min.css" rel="stylesheet">
     <link href="/blog/assets/css/style.css" rel="stylesheet">
@@ -23,8 +23,8 @@
             <i class="fas fa-bars"></i>
         </button>
         <a href="accueil.php"><i class="fas fa-home"></i> <span>Accueil</span></a>
-        <a href="#"><i class="fas fa-user"></i> <span>Mon Profil</span></a>
-        <a href="#"><i class="fas fa-users"></i> <span>Listes utilisateurs</span></a>
+        <a href="/blog/admin/profil.php"><i class="fas fa-user"></i> <span>Mon Profil</span></a>
+        <a href="/blog/admin/user/utilisateur.php"><i class="fas fa-users"></i> <span>Listes utilisateurs</span></a>
         <a href="/blog/admin/article/article.php"><i class="fas fa-file"></i> <span>Articles</span></a>
         <a href="/blog/admin/categorie/categorie.php"><i class="fas fa-folder"></i> <span>Catégories</span></a>
         <a href="/blog/admin/logout.php"><i class="fas fa-sign-out-alt"></i> <span>Déconnexion</span></a>

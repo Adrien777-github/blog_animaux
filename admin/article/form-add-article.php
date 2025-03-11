@@ -9,7 +9,7 @@ $categories = getCategories($pdo);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration</title>
+    <title>Administration | Articles</title>
     <link href="/blog/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/blog/fontawesome/css/all.min.css" rel="stylesheet">
     <link href="/blog/assets/css/style.css" rel="stylesheet">

@@ -7,6 +7,12 @@ function getUtilisateurs($pdo) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getUtilisateur($pdo, $id) {
+    $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE id = ?");
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC); // Récupère l'article sous forme de tableau associatif
+}
+
 // Fonction pour ajouter un utilisateur
 function addUtilisateur($pdo, $nom, $email, $password) {
     $stmt = $pdo->prepare("INSERT INTO utilisateur (nom, email, mot_de_passe) VALUES (?, ?, ?)");

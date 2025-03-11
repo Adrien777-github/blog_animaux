@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'controllerArticle.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -6,6 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = trim($_POST['description']);
     $categorie = trim($_POST['categorie']);
     $image = $_FILES['image'];
+    $auteur = $_SESSION['user'];
 
     if (empty($titre) || empty($description) || empty($categorie) || !$image) {
         echo json_encode(["success" => false, "message" => "Tous les champs sont obligatoires."]);
@@ -13,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Vérifier et traiter l'upload de l'image
-    $uploadDir = "../../images/";
+    $uploadDir = "/blog/images/";
     if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
 
     $filename = uniqid()."_".basename($_FILES["image"]["name"]);
@@ -27,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (move_uploaded_file($image["tmp_name"], $imagePath)) {
-        addArtilce($pdo, $titre, $description, $categorie, $imagePath);
+        addArtilce($pdo, $titre, $description, $categorie, $imagePath, $auteur);
         echo json_encode(["success" => true]);
     } else {
         echo json_encode(["success" => false, "message" => "Erreur lors de l'upload."]);

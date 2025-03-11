@@ -9,14 +9,17 @@ function getArticle($pdo, $id) {
 }
 
 function getArticles($pdo) {
+    // Préparation de la requête
     $stmt = $pdo->prepare("SELECT * FROM articles");
+    // Exécution de la requête
+    $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 // Fonction pour ajouter un article
-function addArtilce($pdo, $titre, $description, $categorie, $image) {
-    $stmt = $pdo->prepare("INSERT INTO articles (titre, description, categorie, image) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$titre, $description, $categorie, $image]);
+function addArtilce($pdo, $titre, $description, $categorie, $image, $auteur) {
+    $stmt = $pdo->prepare("INSERT INTO articles (titre, description, categorie, image, auteur) VALUES (?, ?, ?, ?, ?)");
+    $stmt->execute([$titre, $description, $categorie, $image, $auteur]);
 }
 
 // Fonction pour modifier un article
