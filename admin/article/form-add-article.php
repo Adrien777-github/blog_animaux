@@ -75,6 +75,10 @@ $categories = getCategories($pdo);
             </div>
         </div>
     </div>
+<?php 
+    $path = dirname(__DIR__).DIRECTORY_SEPARATOR."layout".DIRECTORY_SEPARATOR."footer.php";
+    include($path);
+?>
 </div>
 <script src="/blog/assets/js/script.js"></script>
 <script src="/blog/assets/js/bootstrap.bundle.min.js"></script>

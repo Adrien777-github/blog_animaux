@@ -42,7 +42,7 @@
         <a href="/blog/admin/profil.php"><i class="fas fa-user"></i> <span>Mon Profil</span></a>
         <a href="/blog/admin/user/utilisateur.php"><i class="fas fa-users"></i> <span>Listes utilisateurs</span></a>
         <a href="/blog/admin/article/article.php"><i class="fas fa-file"></i> <span>Articles</span></a>
-        <a href="categorie.php"><i class="fas fa-folder"></i> <span>Catégories</span></a>
+        <a href="/blog/admin/categorie/categorie.php"><i class="fas fa-folder"></i> <span>Catégories</span></a>
         <a href="/blog/admin/logout.php"><i class="fas fa-sign-out-alt"></i> <span>Déconnexion</span></a>
     </div>
     <div class="content">
@@ -78,7 +78,10 @@
             </div>
         </div>
     </div>
-
+<?php 
+    $path = dirname(__DIR__).DIRECTORY_SEPARATOR."layout".DIRECTORY_SEPARATOR."footer.php";
+    include($path);
+?>
     </div>
     <script src="/blog/assets/js/script.js"></script>
     <script src="/blog/assets/js/bootstrap.bundle.min.js"></script>

@@ -32,6 +32,10 @@
     <div class="content">
         <h2>Contenu principal</h2>
         <p>Bienvenue sur la page avec une barre de navigation verticale sombre.</p>
+<?php 
+    $path = dirname(__DIR__).DIRECTORY_SEPARATOR."admin".DIRECTORY_SEPARATOR."layout".DIRECTORY_SEPARATOR."footer.php";
+    include($path);
+?>
     </div>
     <script src="/blog/assets/js/script.js"></script>
 </body>
