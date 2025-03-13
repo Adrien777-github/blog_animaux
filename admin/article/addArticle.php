@@ -15,11 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Vérifier et traiter l'upload de l'image
-    $uploadDir = "/blog/images/";
+    $uploadDir = "C:/xampp/htdocs/blog/images/";
     if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
 
     $filename = uniqid()."_".basename($_FILES["image"]["name"]);
-    $imagePath = $uploadDir.$filename;;
+    $imagePath = $uploadDir.$filename;
+    $path_bdd = "/blog/images/".$filename;
     $imageFileType = strtolower(pathinfo($imagePath, PATHINFO_EXTENSION));
     $allowedTypes = ["jpg", "jpeg", "png", "gif"];
 
@@ -29,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (move_uploaded_file($image["tmp_name"], $imagePath)) {
-        addArtilce($pdo, $titre, $description, $categorie, $imagePath, $auteur);
+        addArtilce($pdo, $titre, $description, $categorie, $path_bdd , $auteur);
         echo json_encode(["success" => true]);
     } else {
         echo json_encode(["success" => false, "message" => "Erreur lors de l'upload."]);

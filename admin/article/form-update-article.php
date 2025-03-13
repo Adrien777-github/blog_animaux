@@ -1,11 +1,19 @@
 <?php
 require('../categorie/controllerCategorie.php');
+require('controllerArticle.php');
 
 // Récupération des catégories
 $categories = getCategories($pdo);
 $article = getArticle($pdo, $_GET['id']);
 $id_categorie = $article['categorie'];
 $categorie_art = getCategorie($pdo, $id_categorie);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if(updateCategorie($pdo, $_POST["id"], $_POST["titre"], $_POST["description"])){
+        header("Location: categorie.php");
+        exit();
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -37,10 +45,12 @@ $categorie_art = getCategorie($pdo, $id_categorie);
             <div class="col-md-12">
                 <div class="card shadow">
                     <div class="card-header bg-primary text-white">
-                        <h4>Créer un article</h4>
+                        <h4>Modifier un article</h4>
                     </div>
                     <div class="card-body">
-                    <form id="articleForm" class="needs-validation" novalidate method="POST" action="addArticle.php" enctype="multipart/form-data">
+                    <form id="articleUpdate" class="needs-validation" novalidate method="POST" action="updateArticle.php" enctype="multipart/form-data">
+                        <input type="hidden" class="form-control" value="<?= $article["image"] ?>" id="img" name="img">
+                        <input type="hidden" class="form-control" value="<?= $article["id"] ?>" id="id" name="id">
                         <div class="mb-3">
                             <label for="titre" class="form-label">Titre</label>
                             <input type="text" class="form-control" value="<?= $article["titre"] ?>" id="titre" name="titre" required>
@@ -49,14 +59,14 @@ $categorie_art = getCategorie($pdo, $id_categorie);
 
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" value="<?= $article["description"] ?>" name="description" rows="4" required></textarea>
+                            <textarea class="form-control" id="description" name="description" rows="4" required><?= $article["description"] ?></textarea>
                             <div class="invalid-feedback">La description est obligatoire</div>
                         </div>
 
                         <div class="mb-3">
                             <label for="categorie" class="form-label">Catégorie</label>
                             <select class="form-select" id="categorie" name="categorie" required>
-                            <option value="<?= $categorie_art["nom"] ?>"><?=  ?></option>
+                            <option value="<?= $categorie_art["id"] ?>"><?= $categorie_art["nom"] ?></option>
                             <?php foreach ($categories as $categorie) : ?>
                                 <option value="<?= $categorie["id"] ?>"><?= $categorie["nom"] ?></option>
                             <?php endforeach; ?>
@@ -66,12 +76,12 @@ $categorie_art = getCategorie($pdo, $id_categorie);
 
                         <div class="mb-3">
                             <label for="image" class="form-label">Image</label>
-                            <input class="form-control" type="file" id="image" name="image" accept="image/*" required>
+                            <input class="form-control" type="file" id="image" name="image" accept="image/*">
                             <div class="invalid-feedback">Veuillez sélectionner une image</div>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button class="btn btn-success" type="submit">Créer l'article</button>
+                            <button class="btn btn-success" type="submit">Modifier l'article</button>
                         </div>
                     </form>
                     </div>
@@ -82,6 +92,32 @@ $categorie_art = getCategorie($pdo, $id_categorie);
 </div>
 <script src="/blog/assets/js/script.js"></script>
 <script src="/blog/assets/js/bootstrap.bundle.min.js"></script>
+<script>
+document.getElementById("articleUpdate").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    let form = this;
+    
+    if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        return;
+    }
+
+    let formData = new FormData(form);
+
+    fetch("updateArticle.php", {
+        method: "POST",
+        body: formData
+    }).then(response => response.json()).then(data => {
+        if (data.success) {
+            alert("Article modifié avec succès !");
+            form.reset();
+            form.classList.remove('was-validated');
+        } else {
+            alert("Erreur : " + data.message);
+        }
+    });
+});
 </script>
 </body>
 </html>

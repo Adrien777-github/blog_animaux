@@ -59,7 +59,7 @@
                         <td><?= $utilisateur["nom"] ?></td>
                         <td><?= $utilisateur["email"] ?></td>
                         <td align="center">
-                            <a href="updateUser.php?id=<?= $utilisateur['id'] ?>" class="btn btn-info btn-sm"><i class="fas fa-pen"></i> Modifier</a>
+                            <a href="form-update-user.php?id=<?= $utilisateur['id'] ?>" class="btn btn-info btn-sm"><i class="fas fa-pen"></i> Modifier</a>
                             <button onclick="confirmDelete(<?= $utilisateur['id'] ?>)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Supprimer</button>
                         </td>
                     </tr>

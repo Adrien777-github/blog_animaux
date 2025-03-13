@@ -9,4 +9,6 @@ $user = getUtilisateur($pdo, $id);
 
 var_dump($user);
 die();
+
+// user update
 ?>

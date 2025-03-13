@@ -31,6 +31,13 @@ $articles = getArticles($pdo);
             margin-left: 15px;
         }
     </style>
+    <script>
+        function confirmDelete(id) {
+            if (confirm("Voulez-vous vraiment supprimer cet catégorie ?")) {
+                window.location.href = "deleteArticle.php?id=" + id;
+            }
+        }
+    </script>
 </head>
 <body>
     <div id="sidebarMenu" class="sidebar d-flex flex-column">
@@ -55,7 +62,10 @@ $articles = getArticles($pdo);
                         <h5 class="card-title"><?= $article["titre"] ?></h5>
                         <?php $description  = mb_substr($article["description"], 0, 200, "UTF-8"); ?>
                         <p class="card-text"><?= $description." ..." ?></p>
-                        <a href="#" class="btn btn-primary">En savoir plus</a>
+                        <div class="btn-group">
+                            <a href="form-update-article.php?id=<?= $article['id'] ?>" class="btn btn-primary btn-sm"><i class="fas fa-pen"></i></a>
+                            <button onclick="confirmDelete(<?= $article['id'] ?>)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                        </div>
                     </div>
                 </div>
                 <?php endforeach; ?>

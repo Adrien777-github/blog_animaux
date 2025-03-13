@@ -24,7 +24,7 @@ function addArtilce($pdo, $titre, $description, $categorie, $image, $auteur) {
 
 // Fonction pour modifier un article
 function updateArticle($pdo, $id, $titre, $description, $categorie, $image) {
-    $stmt = $pdo->prepare("UPDATE articles SET nom = ?, email = ?, mot_de_passe = ? WHERE id = ?");
+    $stmt = $pdo->prepare("UPDATE articles SET titre = ?, description = ?, categorie = ?, image = ?  WHERE id = ?");
     $stmt->execute([$titre, $description, $categorie, $image, $id]);
 }
 

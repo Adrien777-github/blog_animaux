@@ -101,7 +101,8 @@ $categories = getCategories($pdo);
   <span class="badge bg-warning"><?= $auteur["nom"] ?></span>
     <p class="card-text"><small class="text-muted"><?= $article["date_creation"] ?></small></p>
     <h5 class="card-title"><?= $article["titre"] ?></h5>
-    <p class="card-"><?= $article["description"] ?></p>
+    <p class="card-text"><?= $article["description"] ?></p>
+    <a href="/blog/index.php" class="btn btn-primary">Retour</a>
   </div>
 </div>
 <footer class="text-center mt-5">
